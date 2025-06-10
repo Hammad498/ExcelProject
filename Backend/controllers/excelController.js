@@ -30,7 +30,7 @@ export const uploadExcel = (req, res) => {
       res.status(200).json({ message: 'Excel data imported successfully!' });
     });
 
-    
+
   } catch (error) {
     if (fs.existsSync(filePath)) {
       fs.unlinkSync(filePath);
@@ -49,7 +49,7 @@ export const getUsers=async(req,res)=>{
   const likeSearch = `%${search}%`;
 
 
-  connection.query(sql, [likeSearch, likeSearch], (err, results) => {
+  db.query(sql, [likeSearch, likeSearch], (err, results) => {
     if (err) return res.status(500).json({ error: err });
     res.json(results);
   });
