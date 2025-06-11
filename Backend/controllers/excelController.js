@@ -41,16 +41,42 @@ export const uploadExcel = (req, res) => {
 
 
 
-export const getUsers=async(req,res)=>{
-    const search = req.query.search || '';
+// export const getUsers=async(req,res)=>{
+//     const search = req.query.search || '';
 
-  const sql = `SELECT * FROM users WHERE name LIKE ? OR email LIKE ?`;
+//   const sql = `SELECT * FROM users WHERE name LIKE ? OR email LIKE ?`;
+
+//   const likeSearch = `%${search}%`;
+
+
+//   db.query(sql, [likeSearch, likeSearch], (err, results) => {
+//     if (err) return res.status(500).json({ error: err });
+//     res.json(results);
+//   });
+// }
+
+
+
+
+export const getUsers = (req, res) => {
+  const search = req.query.search || '';
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+  const offset = (page - 1) * limit;
 
   const likeSearch = `%${search}%`;
 
+  const dataQuery = `SELECT * FROM users WHERE name LIKE ? OR email LIKE ? LIMIT ? OFFSET ?`;
+  const countQuery = `SELECT COUNT(*) AS total FROM users WHERE name LIKE ? OR email LIKE ?`;
 
-  db.query(sql, [likeSearch, likeSearch], (err, results) => {
+  db.query(dataQuery, [likeSearch, likeSearch, limit, offset], (err, results) => {
     if (err) return res.status(500).json({ error: err });
-    res.json(results);
+
+    db.query(countQuery, [likeSearch, likeSearch], (err2, countResult) => {
+      if (err2) return res.status(500).json({ error: err2 });
+
+      const totalRecords = countResult[0].total;
+      res.json({ data: results, total: totalRecords });
+    });
   });
-}
+};
