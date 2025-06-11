@@ -7,7 +7,7 @@ export const register = async (req, res) => {
   const hashedPassword = await bcrypt.hash(password, 10);
 
   db.query(
-    'INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)',
+    'INSERT INTO users1 (name, email, password, role) VALUES (?, ?, ?, ?)',
     [name, email, hashedPassword, role || 'user'],
     (err, result) => {
       if (err) {
@@ -24,7 +24,7 @@ export const register = async (req, res) => {
 export const login = (req, res) => {
   const { email, password } = req.body;
 
-  db.query('SELECT * FROM users WHERE email = ?', [email], async (err, results) => {
+  db.query('SELECT * FROM users1 WHERE email = ?', [email], async (err, results) => {
     if (err || results.length === 0) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
@@ -43,3 +43,26 @@ export const login = (req, res) => {
     res.json({ token });
   });
 };
+
+
+
+export const userInfo=async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    db.query(
+      'SELECT id, name, email, role FROM users1 WHERE id = ?',
+      [userId],
+      (err, results) => {
+        if (err) return res.status(500).json({ error: 'Database error' });
+
+        if (results.length === 0)
+          return res.status(404).json({ error: 'User not found' });
+
+        res.status(200).json(results[0]);
+      }
+    );
+  } catch (err) {
+    res.status(500).json({ error: 'Server error' });
+  }
+}

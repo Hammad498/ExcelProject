@@ -1,29 +1,23 @@
+
+
+
+
 import express from 'express';
-import dotenv from 'dotenv';
-
 import cors from 'cors';
+import dotenv from 'dotenv';
+import authRoutes from './routes/authRoutes.js';
+import excelRoutes from './routes/excelRoutes.js';
+import './config/db.js';
 
-import connection from './config/db.js';   ///autoTriggers what is in db.js
-import excelRoutes from './routes/excelRoutes.js'
-
+const app = express();
 dotenv.config();
-
-const app=express();
-
-
 
 app.use(cors());
 app.use(express.json());
-app.use('/api',excelRoutes);
+app.use('/uploads', express.static('uploads'));
 
+app.use('/api/auth', authRoutes);
+app.use('/api', excelRoutes);
 
-app.get("/",(req,res)=>{
-    res.send("server get request!")
-})
-
-
-
-
-app.listen(3000,()=>{
-    console.log('server is running on port 3000')
-})
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
