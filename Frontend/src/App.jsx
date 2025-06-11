@@ -1,12 +1,14 @@
 
 import axios from 'axios';
 import { useState } from 'react';
-import DataTable from './components/DataTable.jsx';
+// import DataTable from './components/DataTable.jsx';
+import PrimeUserTable from './components/DataTable.jsx'
+
 
 function App() {
   const [file, setFile] = useState(null);
   const [uploading, setUploading] = useState(false);
-  const [refreshData, setRefreshData] = useState(0); // To trigger data refresh
+  const [refreshData, setRefreshData] = useState(0); 
 
   const handleUpload = async () => {
     if (!file) {
@@ -91,7 +93,7 @@ function App() {
         )}
       </div>
 
-      <DataTable key={refreshData} />
+      <PrimeUserTable key={refreshData} />
     </div>
   );
 }
