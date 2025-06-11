@@ -7,7 +7,7 @@ const connection=mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
   password : process.env.DB_PASSWORD,
-  database : 'excel_data'
+  database : 'excel_data1'
 });
 
 
@@ -20,5 +20,6 @@ connection.connect(function(err) {
  
   console.log('connected as id ' + connection.threadId);
 });
+
 
 export default connection;
