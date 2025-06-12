@@ -21,6 +21,8 @@ export const register = async (req, res) => {
   );
 };
 
+///////////////////////////////////////////////////
+
 export const login = (req, res) => {
   const { email, password } = req.body;
 

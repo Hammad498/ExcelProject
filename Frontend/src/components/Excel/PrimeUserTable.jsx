@@ -21,7 +21,7 @@ function PrimeUserTable() {
   const fetchUsers = async () => {
     setLoading(true);
     try {
-      // Fixed: Added Authorization header
+      
       const token = localStorage.getItem('token');
       const res = await axios.get('http://localhost:3000/api/users', {
         params: {
@@ -38,7 +38,7 @@ function PrimeUserTable() {
       setTotalRecords(res.data.total || 0);
     } catch (err) {
       console.error('Error fetching users:', err);
-      // Fixed: Better error handling
+      
       if (err.response?.status === 401) {
         localStorage.removeItem('token');
         window.location.href = '/login';

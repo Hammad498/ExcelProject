@@ -27,7 +27,7 @@ function Login() {
     <div style={styles.container}>
       <div style={styles.card}>
         <h2 style={styles.heading}>Login</h2>
-        <form onSubmit={handleLogin} style={styles.form}>
+        {/* <form onSubmit={handleLogin} style={styles.form} autoComplete="off">
           <input
             type="email"
             placeholder="Email"
@@ -35,6 +35,7 @@ function Login() {
             onChange={(e) => setEmail(e.target.value)}
             required
             style={styles.input}
+            autoComplete="Email"
           />
           <input
             type="password"
@@ -43,11 +44,42 @@ function Login() {
             onChange={(e) => setPassword(e.target.value)}
             required
             style={styles.input}
+            autoComplete="Password"
+
           />
           <button type="submit" style={styles.button}>
             Login
           </button>
-        </form>
+        </form> */}
+        <form onSubmit={handleLogin} autoComplete="off" style={styles.form}>
+  {/* Trick autofill */}
+  <input type="text" name="fake-username" autoComplete="username" style={{ display: 'none' }} />
+  <input type="password" name="fake-password" autoComplete="current-password" style={{ display: 'none' }} />
+
+  <input
+    name="login_email"
+    type="email"
+    autoComplete="nope"
+    placeholder="Email"
+    value={email}
+    onChange={(e) => setEmail(e.target.value)}
+    required
+    style={styles.input}
+  />
+  <input
+    name="login_password"
+    type="password"
+    autoComplete="nope"
+    placeholder="Password"
+    value={password}
+    onChange={(e) => setPassword(e.target.value)}
+    required
+    style={styles.input}
+  />
+  <button type="submit" style={styles.button}>
+            Login
+          </button>
+
         {msg && <p style={styles.error}>{msg}</p>}
 
         <div style={styles.registerContainer}>
@@ -56,6 +88,7 @@ function Login() {
             Register
           </button>
         </div>
+      </form>
       </div>
     </div>
   );

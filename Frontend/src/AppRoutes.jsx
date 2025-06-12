@@ -24,7 +24,7 @@ const AppRoutes = () => {
           path="/records"
           element={isAuthenticated() ? <DataTable /> : <Navigate to="/login" />}
         />
-        {/* Fixed: Add home route and redirect unauthenticated users to login */}
+        {/* Add home route and redirect unauthenticated users to login */}
         <Route 
           path="/" 
           element={isAuthenticated() ? <Navigate to="/records" /> : <Navigate to="/login" />} 

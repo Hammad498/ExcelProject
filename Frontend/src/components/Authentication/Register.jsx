@@ -26,7 +26,7 @@ function Register() {
     <div style={styles.container}>
       <div style={styles.card}>
         <h2 style={styles.heading}>Register</h2>
-        <form onSubmit={handleRegister} style={styles.form}>
+        <form onSubmit={handleRegister} style={styles.form} autoComplete="off">
           <input
             name="name"
             placeholder="Name"
@@ -42,6 +42,7 @@ function Register() {
             onChange={handleChange}
             required
             style={styles.input}
+            autoComplete="Email"
           />
           <input
             name="password"
@@ -51,6 +52,7 @@ function Register() {
             onChange={handleChange}
             required
             style={styles.input}
+            autoComplete="Password"
           />
           <select name="role" value={form.role} onChange={handleChange} style={styles.input}>
             <option value="user">User</option>
